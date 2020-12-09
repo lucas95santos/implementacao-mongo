@@ -11,6 +11,9 @@ routes.get('/devs', developerController.listAll);
 // rota para cadastrar um desenvolvedor
 routes.post('/devs', developerController.create);
 
+// rota para atualizar um desenvolvedor
+routes.put('/devs/:id', developerController.update);
+
 // rota para remover um desenvolvedor
 routes.delete('/devs/:id', developerController.delete);
 

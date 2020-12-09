@@ -65,6 +65,30 @@ class DeveloperController {
     return response.status(201).json(developer);
   }
 
+  async update(request, response) {
+    const { id } = request.params;
+
+    let user = await Developer.findById(id);
+
+    if (!user) {
+      return response.status(404).json({
+        error: `Não existe desenvolvedor com o id ${id}`
+      });
+    }
+
+    const result = await Developer.where({ _id: id }).updateOne(request.body);
+
+    if (!result) {
+      return response.status(500).json({
+        error: 'Erro ao atualizar desenvolvedor'
+      });
+    }
+
+    user = await Developer.findById(id);
+
+    return response.json(user);
+  }
+
   async delete(request, response) {
     const { id } = request.params;
 
