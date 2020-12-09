@@ -37,6 +37,20 @@ class DeveloperController {
     return response.json(users);
   }
 
+  async listOne(request, response) {
+    const { username } = request.params;
+
+    const user = await Developer.findOne({ user: username });
+
+    if (!user) {
+      return response.status(404).json({
+        error: `Desenvolvedor com o user ${username} não está cadastrado`
+      });
+    }
+
+    return response.json(user);
+  }
+
   async create(request, response) {
     const { username } = request.body;
 
