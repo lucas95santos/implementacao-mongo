@@ -17,5 +17,6 @@ A idéia da implementação é aproximar desenvolvedores que possuem perfil no G
 * Curtir o perfil de um desenvolvedor
 * Não curtir o perfil de um desenvolvedor
 * Listar todos os desenvolvedores que ainda não foram avaliados
+* Listar somente um desenvolvedor
 * Atualizar um desenvolvedor
 * Remover um desenvolvedor
