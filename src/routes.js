@@ -11,6 +11,9 @@ routes.get('/devs', developerController.listAll);
 // rota para cadastrar um desenvolvedor
 routes.post('/devs', developerController.create);
 
+// rota para remover um desenvolvedor
+routes.delete('/devs/:id', developerController.delete);
+
 // rota para dar like em algum desenvolvedor
 routes.post('/devs/:developerId/likes', actionsController.like);
 

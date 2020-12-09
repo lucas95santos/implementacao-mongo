@@ -44,6 +44,28 @@ class DeveloperController {
 
     return response.json(developer);
   }
+
+  async delete(request, response) {
+    const { id } = request.params;
+
+    const user = await Developer.findById(id);
+
+    if (!user) {
+      return response.status(404).json({
+        error: `Não existe desenvolvedor com o id ${id}`
+      });
+    }
+
+    const result = await Developer.deleteOne(user);
+
+    if (!result) {
+      return response.status(500).json({
+        error: 'Erro ao remover desenvolvedor'
+      });
+    }
+
+    return response.status(204).send();
+  }
 }
 
 module.exports = new DeveloperController();
