@@ -1,6 +1,7 @@
 const { Router } = require('express');
 // controllers
 const developerController = require('./controllers/DeveloperController');
+const actionsController = require('./controllers/ActionsController');
 
 const routes = Router();
 
@@ -11,9 +12,9 @@ routes.get('/devs', developerController.listAll);
 routes.post('/devs', developerController.create);
 
 // rota para dar like em algum desenvolvedor
-routes.post('/devs/:developerId/likes', developerController.like);
+routes.post('/devs/:developerId/likes', actionsController.like);
 
 // rota para dar dislike em algum desenvolvedor
-routes.post('/devs/:developerId/dislikes', developerController.dislike);
+routes.post('/devs/:developerId/dislikes', actionsController.dislike);
 
 module.exports = routes;
