@@ -3,6 +3,26 @@ const axios = require('axios');
 const Developer = require('../models/Developer');
 
 class DeveloperController {
+  async listAll(request, response) {
+    const { user } = request.headers;
+
+    if (!user) {
+      return response.status(404).json({ error: 'O id deve ser informado' });
+    }
+
+    const loggedDev = await Developer.findById(user);
+
+    const users = await Developer.find({
+      $and: [
+        { _id: { $ne: loggedDev._id } },
+        { _id: { $nin: loggedDev.likes } },
+        { _id: { $nin: loggedDev.dislikes } }
+      ]
+    });
+
+    return response.json(users);
+  }
+
   async create(request, response) {
     const { username } = request.body;
 
