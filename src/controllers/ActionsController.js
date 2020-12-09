@@ -11,10 +11,19 @@ class ActionsController {
     }
 
     const loggedDev = await Developer.findById(user);
+
+    if (!loggedDev) {
+      return response.status(400).json({
+        error: 'Você está tentando logar com um desenvolvedor que não existe'
+      });
+    }
+
     const targetDev = await Developer.findById(developerId);
 
     if (!targetDev) {
-      return response.status(400).json({ error: 'Desenvolvedor não existe' });
+      return response.status(400).json({
+        error: `Não existe desenvolvedor com o id ${developerId}`
+      });
     }
 
     if (!loggedDev.likes.includes(targetDev._id)) {
@@ -41,10 +50,19 @@ class ActionsController {
     }
 
     const loggedDev = await Developer.findById(user);
+
+    if (!loggedDev) {
+      return response.status(400).json({
+        error: 'Você está tentando logar com um desenvolvedor que não existe'
+      });
+    }
+
     const targetDev = await Developer.findById(developerId);
 
     if (!targetDev) {
-      return response.status(400).json({ error: 'Desenvolvedor não existe' });
+      return response.status(400).json({
+        error: `Não existe desenvolvedor com o id ${developerId}`
+      });
     }
 
     if (!loggedDev.dislikes.includes(targetDev._id)) {
