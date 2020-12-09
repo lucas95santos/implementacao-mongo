@@ -7,10 +7,18 @@ class DeveloperController {
     const { user } = request.headers;
 
     if (!user) {
-      return response.status(404).json({ error: 'O id deve ser informado' });
+      return response.status(404).json({
+        error: 'O id deve ser informado'
+      });
     }
 
     const loggedDev = await Developer.findById(user);
+
+    if (!loggedDev) {
+      return response.status(404).json({
+        error: `Não existe desenvolvedor com o id ${user}`
+      });
+    }
 
     const users = await Developer.find({
       $and: [
@@ -19,6 +27,12 @@ class DeveloperController {
         { _id: { $nin: loggedDev.dislikes } }
       ]
     });
+
+    if (!users) {
+      return response.status(500).json({
+        error: 'Erro ao listar os desenvolvedores'
+      });
+    }
 
     return response.json(users);
   }
@@ -29,7 +43,7 @@ class DeveloperController {
     const userExists = await Developer.findOne({ user: username });
 
     if (userExists) {
-      return response.json(userExists);
+      return response.json('Desenvolvedor já foi cadastrado');
     }
 
     const githubResponse = await axios.get(`https://api.github.com/users/${username}`);
@@ -42,7 +56,13 @@ class DeveloperController {
       avatar: avatar_url
     });
 
-    return response.json(developer);
+    if (!developer) {
+      return response.status(500).json({
+        error: 'Erro ao cadastrar o desenvolvedor'
+      });
+    }
+
+    return response.status(201).json(developer);
   }
 
   async delete(request, response) {
