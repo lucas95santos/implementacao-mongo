@@ -15,14 +15,14 @@ class DeveloperController {
     const githubResponse = await axios.get(`https://api.github.com/users/${username}`);
     const { name, bio, avatar_url } = githubResponse.data;
 
-    const dev = await Developer.create({
+    const developer = await Developer.create({
       name: name !== null ? name : "Sem nome",
       user: username,
       bio: bio !== null ? bio : "Sem bio",
       avatar: avatar_url
     });
 
-    return response.json(dev);
+    return response.json(developer);
   }
 }
 
